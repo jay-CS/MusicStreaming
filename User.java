@@ -3,6 +3,9 @@ import java.io.*;
 
 
 public class User {
+	public String firstName;
+	public String lastName;
+	public String email;
 	public String username;
 	public static int numOfUsers;
 	public int userID;
@@ -14,6 +17,18 @@ public class User {
 		this.password = password;
 		this.userID = numOfUsers++;
 		this.playlists = new ArrayList();
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public void setUsername(String username) {
@@ -32,6 +47,18 @@ public class User {
 		this.playlists.add(playlist);
 	}
 	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -46,6 +73,10 @@ public class User {
 	
 	public int getNumOfUsers() {
 		return numOfUsers;
+	}
+	
+	public boolean checkEmail(String email) {
+		return this.email.equals(email);
 	}
 	
 	public boolean checkUsername(String username) {
