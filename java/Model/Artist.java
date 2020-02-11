@@ -8,6 +8,7 @@
  *
  * @author samantharain
  */
+package Model;
 public class Artist {
     
 	 private double terms_freq;

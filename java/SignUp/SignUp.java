@@ -174,7 +174,9 @@ public class SignUp extends javax.swing.JDialog {
         }
         if(true) {
             System.out.println("Username: " + name + ", Paswword: " + pass);
-            this.setVisible(false);
+            HomePage hp = new HomePage(new javax.swing.JFrame(),true);
+            this.dispose();
+            hp.setVisible(true);
             return;
         }
         

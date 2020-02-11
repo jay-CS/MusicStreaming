@@ -16,13 +16,20 @@ public class Music {
     private Release r;
     private Song s;
     
-    public Music(Artist a, Release r, Song s) {
+    public Music(Release r, Artist a, Song s) {
         this.a = a;
         this.r = r;
         this.s = s;
     }
-    
-    
+
+    public String getSongName() {
+        return s.getTitle();
+    }
    
+    public String getArtistName() {
+        return a.getName();
+    }
+    
+    
     
 }

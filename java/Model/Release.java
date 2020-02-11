@@ -12,16 +12,16 @@ package Model;
  */
 public class Release {
 	
-        private int ID;
+        private int id;
 	private String name;
 	
-	public Release(int ID, String name) {
-		this.ID = ID;
+	public Release(int id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 	
 	public void setID(int ID) {
-		this.ID = ID;
+		this.id = ID;
 	}
 	
 	public void setName(String name) {
@@ -29,7 +29,7 @@ public class Release {
 	}
 	
 	public int getID() {
-		return ID;
+		return id;
 	}
 	
 	public int getName() {
