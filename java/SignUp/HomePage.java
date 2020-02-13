@@ -26,6 +26,8 @@ public class HomePage extends javax.swing.JDialog {
     public HomePage(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        listModel.addElement("Items Fuck");
+        listModel.addElement("Item This");
         this.jList1.setModel(listModel);
         this.jList2.setModel(listModel);
 
@@ -187,12 +189,13 @@ public class HomePage extends javax.swing.JDialog {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-//        if(listModel2.contains(this.jTextField2.getText())) {
-//            System.out.println("Exists");
-//        }
-        
-         listModel2.addElement(this.jTextField2.getText());
-         this.jList2.setModel(listModel2);
+        if(listModel2.contains(this.jTextField2.getText())) {
+            System.out.println("Exists");
+        }
+        else {
+            listModel2.addElement(this.jTextField2.getText());
+            this.jList2.setModel(listModel);
+        }
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
@@ -216,6 +219,11 @@ public class HomePage extends javax.swing.JDialog {
             
             public void run() {
                 HomePage dialog = new HomePage(new javax.swing.JFrame(), true);
+                listModel = new DefaultListModel();
+                listModel.addElement("Items Fuck");
+                listModel.addElement("Item This");
+                dialog.jList1.setModel(listModel);
+                dialog.setVisible(true);
             }
         });
     }
