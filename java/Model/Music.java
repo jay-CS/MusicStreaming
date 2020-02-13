@@ -12,9 +12,9 @@ package Model;
  */
 public class Music {
     
-    private Artist a;
-    private Release r;
-    private Song s;
+    private Artist artist;
+    private Release release;
+    private Song song;
     
     public Music(Release r, Artist a, Song s) {
         this.a = a;
