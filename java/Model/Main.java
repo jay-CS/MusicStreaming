@@ -31,10 +31,12 @@ public class Main {
     //Create sign up instance
     public static void main(String[] args) throws IOException{
         //Integer i;
-        //Main player = new Main();
-        // player.mp3play("/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/imperial.mp3");
+        Main player = new Main();
+        player.mp3play("/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/imperial.mp3");
         Music[] playlist = readMusicJSON();
-        System.out.println(playlist[0].getSongName());
+        for(int i = 0; i < playlist.length; i++) {
+		System.out.println("Song: " + playlist[0].getSongName());
+	}
          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 SignUp dialog = new SignUp(new javax.swing.JFrame(), true);
@@ -54,13 +56,12 @@ public class Main {
     
     public static Music[] readMusicJSON(){
         Gson gson = new Gson();
-        String fileName = "/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/music1.json";
+        String fileName = "/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/music.json";
         try{
             FileReader fr = new FileReader(fileName);  
-            Type music = new TypeToken<ArrayList<Music>>(){}.getType();
             Music[] playlist = gson.fromJson(fr, Music[].class);
             // musicList has ArrayList of MusicClass objects
-             return playlist;
+            return playlist;
         }
         catch(FileNotFoundException e){
             System.out.println("File not found.");
