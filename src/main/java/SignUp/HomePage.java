@@ -336,7 +336,6 @@ public class HomePage extends javax.swing.JDialog {
                 listModel.addElement(m1.getSongName());
              }
             jList1.setModel(listModel);
-            
         }
     }//GEN-LAST:event_jList2MouseClicked
 
