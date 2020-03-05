@@ -21,12 +21,12 @@ import java.util.ArrayList;
  */
 public class Proxy {
     
-    private CommunicationModule communicationModule;   // This is only for test. it should use the Communication  Module
+    private CommunicationModuleClient communicationModule;   // This is only for test. it should use the Communication  Module
 
     private static Proxy proxy = null;
 
     
-    public void init(CommunicationModule communicationModule) {
+    public void init(CommunicationModuleClient communicationModule) {
         this.communicationModule = communicationModule;
     }
     
