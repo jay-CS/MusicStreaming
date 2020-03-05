@@ -6,6 +6,9 @@
 package SignUp;
 
 import Model.*;
+import com.google.gson.Gson;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,15 +29,16 @@ public class HomePage extends javax.swing.JDialog {
     static DefaultListModel listModel = new DefaultListModel() ;
     static DefaultListModel listModel2 = new DefaultListModel();
     ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+    User user;
     /**
      * Creates new form HomePage
      */
-    public HomePage(java.awt.Frame parent, boolean modal) {
+    public HomePage(java.awt.Frame parent, boolean modal, User u) {
         super(parent, modal);
         initComponents();
         this.jList1.setModel(listModel);
         this.jList2.setModel(listModel);
-
+        user = u;
     }
 
     /**
@@ -63,6 +67,7 @@ public class HomePage extends javax.swing.JDialog {
         jTextField3 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -158,6 +163,13 @@ public class HomePage extends javax.swing.JDialog {
             }
         });
 
+        jButton6.setText("Sign Out");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,10 +197,7 @@ public class HomePage extends javax.swing.JDialog {
                                     .addComponent(jButton4)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jButton5)))
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,6 +208,12 @@ public class HomePage extends javax.swing.JDialog {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(jButton5)
+                .addGap(121, 121, 121)
+                .addComponent(jButton6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,6 +236,8 @@ public class HomePage extends javax.swing.JDialog {
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
+                        .addGap(5, 5, 5)
+                        .addComponent(jButton6)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -414,6 +431,29 @@ public class HomePage extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jList1MouseClicked
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        Gson gson = new Gson();
+        String fileName = "/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/accounts.json";
+        for(Playlist p: playlists) {
+            user.addPlaylist(p);
+        }
+        try{
+            FileWriter fr = new FileWriter(fileName); 
+            String json = gson.toJson(user);
+            System.out.println(json);
+            fr.write(json);
+            fr.close();
+        }
+        catch(FileNotFoundException e){
+            System.out.println("File not found.");
+        } 
+        catch (IOException ex) {
+            Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -428,7 +468,7 @@ public class HomePage extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             
             public void run() {
-                HomePage dialog = new HomePage(new javax.swing.JFrame(), true);
+                HomePage dialog = new HomePage(new javax.swing.JFrame(),true,null);
                 dialog.setVisible(true);
             }
         });
@@ -440,6 +480,7 @@ public class HomePage extends javax.swing.JDialog {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

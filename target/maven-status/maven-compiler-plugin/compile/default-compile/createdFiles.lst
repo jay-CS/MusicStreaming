@@ -7,6 +7,7 @@ Model/Playlist.class
 SignUp/SignUp$1.class
 Model/Song.class
 SignUp/HomePage$9.class
+RPC/Dispatcher.class
 SignUp/SignUp$3.class
 Model/Main.class
 SignUp/SignUp$8.class
@@ -17,14 +18,17 @@ Model/Music.class
 Model/User.class
 SignUp/SignInfo$5.class
 SignUp/HomePage$12.class
+RPC/SongDispatcher.class
 SignUp/HomePage$1.class
 SignUp/HomePage$8.class
 SignUp/SignInfo$3.class
 Model/Main$1$1.class
 Model/Release.class
 Model/Artist.class
+RPC/DispatcherInterface.class
 SignUp/SignInfo.class
 SignUp/SignUp$5.class
+SignUp/HomePage$14.class
 SignUp/HomePage$5.class
 SignUp/HomePage$4.class
 SignUp/SignUp$2.class

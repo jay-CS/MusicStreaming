@@ -189,7 +189,7 @@ public class SignInfo extends javax.swing.JDialog {
         }
         
         User user = new User(fname,lname,username,email,pass);
-        HomePage hp = new HomePage(new javax.swing.JFrame(),true);
+        HomePage hp = new HomePage(new javax.swing.JFrame(),true,user);
         this.dispose();
         hp.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
