@@ -8,45 +8,60 @@ import java.net.UnknownHostException;
 
 public class CommunicationModuleClient {
 
-    final int FRAGMENT_SIZE = 65000;
-    DatagramSocket socket;
-    int serverSocket;
-    InetAddress serverAddress;
-    
-    
-    public String sendToServer(String msg) throws IOException {
+	final int FRAGMENT_SIZE = 65000;
+	DatagramSocket socket;
+	int serverSocketNum;
+	InetAddress serverAddress;
 
-        System.out.println("Received: " + msg);
+	public CommunicationModuleClient() throws UnknownHostException, SocketException {
+		this.socket = new DatagramSocket();
+		serverSocketNum = 1111;
+		this.serverAddress = InetAddress.getByName("localhost");
+	}
 
-        String string = "";
+	public String sendToServer(String msg) throws IOException {
 
-        while (true) {
+		System.out.println("Received: " + msg);
 
-                socket = new DatagramSocket();
-                byte[] msgBytes = msg.getBytes();
-                DatagramPacket request = new DatagramPacket(msgBytes, msgBytes.length, serverAddress, serverSocket);
-                socket.send(request);
-                byte[] buffer = new byte[FRAGMENT_SIZE];
-                DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-                socket.receive(reply);
-                System.out.println("Client recieved here: " + new String(reply.getData()));
-                string = new String(reply.getData());
-                System.out.println("Sending: " + string);
-                socket.close();
-                break;
-       }
+		String string = "";
 
-        return string;
+		while (true) {
 
-    }
-    
-    public int getServerSocket() {
-    	return this.serverSocket;
-    }
-    public InetAddress getServerAdress() {
-    	return this.serverAddress;
-    }
-    public void setServerSocket(String string) throws UnknownHostException {
-        serverAddress = InetAddress.getByName(string);
-    }
+
+			byte[] msgBytes = msg.getBytes();
+			DatagramPacket request = new DatagramPacket(msgBytes, msgBytes.length, serverAddress, serverSocketNum);
+			socket.send(request);
+
+			byte[] buffer = new byte[FRAGMENT_SIZE];
+			//receive reply from server
+			DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+			socket.receive(reply);
+			System.out.println("Client recieved here: " + new String(reply.getData()));
+			string = new String(reply.getData());
+			System.out.println("Sending: " + string);
+			socket.close();
+			break;
+		}
+
+		return string;
+
+	}
+	public DatagramSocket getSocket() {
+		return this.socket;
+	}
+	public int getServerSocketNum() {
+		return this.serverSocketNum;
+	}
+	public InetAddress getServerAddress() {
+		return this.serverAddress;
+	}
+	public void setSocket(DatagramSocket socket) {
+		this.socket = socket;
+	}
+	public void setServerSocketNum(int serverSocketNum) {
+		this.serverSocketNum = serverSocketNum;
+	}
+	public void setServerSocketAddress(String string) throws UnknownHostException {
+		serverAddress = InetAddress.getByName(string);
+	}
 }
