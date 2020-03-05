@@ -1,5 +1,5 @@
 /**
-* The CECS327RemoteInputStream extends InputStream class. The class implements 
+* The CECS327InputStream implements InputStream. The class implements 
 * markers that are used in AudioInputStream
 *
 * @author  Oscar Morales-Ponce
@@ -7,16 +7,16 @@
 * @since   2019-01-24 
 */
 
-
+package Model;
 import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
-import com.google.gson.JsonObject;
-import java.util.concurrent.Semaphore; 
 
 
-public class CECS327RemoteInputStream extends InputStream {
+
+public class CECS327InputStream extends InputStream {
     /**
     * Total number of bytes in the file
     */
@@ -43,61 +43,39 @@ public class CECS327RemoteInputStream extends InputStream {
      * It is used to read the buffer
      */
     protected int fragment = 0;
-    protected static final int FRAGMENT_SIZE = 8192;
+    protected int FRAGMENT_SIZE = 8192;
      /**
      * File name to stream
      */
-    protected Long fileName;
-    /**
-    * Instance of an implementation of proxyInterface
-    */
-    protected ProxyInterface proxy;
-    
-    Semaphore sem; 
-
+    protected String fileName;
 
     /**
      * Constructor of the class. Initialize the variables and reads the first 
      * frament in nextBuf
      * @param fileName The name of the file
     */
-    public CECS327RemoteInputStream(Long fileName, ProxyInterface proxy) throws IOException {
-        sem = new Semaphore(1); 
-        try
-        {
-            sem.acquire(); 
-        } catch (InterruptedException exc) { 
-            System.out.println(exc);
-        }
-        this.proxy = proxy;
-        this.fileName = fileName;        
+    public CECS327InputStream(String fileName) throws IOException {
+        this.fileName = fileName;
+        File file = new File(fileName);
+        this.total =  (int)file.length();
         this.buf  = new byte[FRAGMENT_SIZE];	
         this.nextBuf  = new byte[FRAGMENT_SIZE];	
-        JsonObject jsonRet = proxy.synchExecution("getFileSize", String.valueOf(this.fileName));
-        this.total = Integer.parseInt(jsonRet.get("ret").getAsString());
         getBuff(fragment);
         fragment++;
      }
 
     /**
-     * getNextBuff reads the buffer. It gets the data using
-     * the remote method getSongChunk
+     * getNextBuff reads the buffer. The fuction is used to 
+     * simplify the integration of UDP sockets.
     */
     protected void getBuff(int fragment) throws IOException
     {
-        new Thread()
-        {
-            public void run() {
-             
-                JsonObject jsonRet = proxy.synchExecution("getSongChunk", fileName, fileName, fragment);
-                String s = jsonRet.get("ret").getAsString();
-                nextBuf = Base64.getDecoder().decode(s);
-                sem.release(); 
-                System.out.println("Read buffer");
-            }
-        }.start();
-       
-     }
+        File file = new File(fileName);
+        FileInputStream inputStream = new FileInputStream(file);
+        inputStream.skip(fragment * FRAGMENT_SIZE);
+        inputStream.read(nextBuf);
+        inputStream.close(); 
+    }
 
     /**
      * Reads the next byte of data from the input stream.
@@ -114,16 +92,8 @@ public class CECS327RemoteInputStream extends InputStream {
 	  int posmod = pos % FRAGMENT_SIZE;
 	  if (posmod == 0)
 	  {
-          try
-          {
-            sem.acquire(); 
-          }catch (InterruptedException exc) 
-          { 
-                System.out.println(exc);
-          }
 	      for (int i=0; i< FRAGMENT_SIZE; i++)
 		      buf[i] = nextBuf[i];
-          
 	      getBuff(fragment);
 	      fragment++;
 	  }
