@@ -1,5 +1,5 @@
 
-package RPC;
+package RPCServer;
 public interface DispatcherInterface {
 /*
 * Executes a remote method.

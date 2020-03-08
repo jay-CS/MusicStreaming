@@ -18,14 +18,17 @@ public class PlaylistDispatcher {
     
     
     public String createPlaylist(String playlistName ) throws IOException {
-        return new Gson().toJson();
+        //return new Gson().toJson();
+        return null;
     }
 
     public String deletePlaylist(String playlistName ) throws IOException {
-        return new Gson().toJson();
+        //return new Gson().toJson();
+        return null;
     }
 
     public String addSongToPlaylist(  String playlistName, String songId ) throws IOException {
-        return new Gson().toJson();
+        //return new Gson().toJson();
+        return null;
     }
 }

@@ -30,28 +30,16 @@ public class Proxy {
         this.communicationModule = communicationModule;
     }
     
-     /*
-    * Executes the  remote method "remoteMethod". The method blocks until
-    * it receives the reply of the message. 
-    */
+    
     public JsonObject synchExecution(String remoteMethod, String[] param) throws IOException {
         JsonObject jsonRequest = packRequest(remoteMethod, param);
 
         JsonParser parser = new JsonParser();
-        String strRet =  this.communicationModule.syncSend(jsonRequest.toString());
-        return parser.parse(strRet).getAsJsonObject();
+        //String strRet =  this.communicationModule.syncSend(jsonRequest.toString());
+        //return parser.parse(strRet).getAsJsonObject();
+        return null;
     }
 
-    /*
-     * Executes the  remote method remoteMethod and returns without waiting
-     * for the reply. It does similar to synchExecution but does not
-     * return any value
-     *
-     */
-    public void asynchExecution(String remoteMethod, String[] param) throws IOException{
-        JsonObject jsonRequest = packRequest(remoteMethod, param);
-        this.communicationModule.asyncSend(jsonRequest.toString());
-    }
 
     private JsonObject packRequest(String remoteMethod, String[] param) {
         
@@ -85,15 +73,9 @@ public class Proxy {
         return jsonRequest;
     }
 
-
-    /**
-     * Reads catalog.json and gets the desired Catalog object
-     * Will never return null because remoteMethod is in catalog.json
-     * @param remoteMethod String - name of remote method to be executed
-     * @return Catalog object with given name
-     */
+    
     public static Catalog getCatalogMethod(String remoteMethod){
-        ArrayList<Catalog> catalogList = readCatalog();
+        ArrayList<Catalog> catalogList = readCatalogMethods();
         for(Catalog c : catalogList){
             if(c.getremoteMethod().equals(remoteMethod)){
                 return c;
@@ -103,16 +85,14 @@ public class Proxy {
     }
 
 
-    public static ArrayList<Catalog> readCatalog(){
+    public static ArrayList<Catalog> readCatalogMethods(){
         Gson gson = new Gson();
-        String fileName = "catalog.json";// TODO: make relative path
-
+        String fileName = "catalog.json";
         try{
             Type catalogType = new TypeToken<ArrayList<Catalog>>(){}.getType();
             ArrayList<Catalog> catalog = gson.fromJson(new FileReader(fileName), catalogType);
             return catalog;
         }
-
         catch(FileNotFoundException e){
             System.out.println("Catalog file not found.");
         }

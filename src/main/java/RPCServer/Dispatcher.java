@@ -5,7 +5,7 @@
 * @version 0.15
 * @since   02-11-2019 
 */
-package RPC;
+package RPCServer;
 import java.util.HashMap;
 import java.util.*;
 import java.lang.reflect.*;
