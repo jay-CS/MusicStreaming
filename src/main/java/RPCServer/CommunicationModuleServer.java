@@ -1,71 +1,56 @@
-package RPCClient;
-
+package RPCServer;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
-
-public class CommunicationModuleClient {
-
-	final int FRAGMENT_SIZE = 65000;
-	DatagramSocket socket;
-	int serverSocketNum;
-	InetAddress serverAddress;
-
-	public CommunicationModuleClient() throws UnknownHostException, SocketException {
-		this.socket = new DatagramSocket();
-		serverSocketNum = 1111;
-		this.serverAddress = InetAddress.getByName("localhost");
-	}
-
-	public String sendToServer(String msg) throws IOException {
-
-		System.out.println("Received: " + msg);
-
-		String string = "";
-
-		while (true) {
-
-
-			byte[] msgBytes = msg.getBytes();
-			DatagramPacket request = new DatagramPacket(msgBytes, msgBytes.length, serverAddress, serverSocketNum);
-			socket.send(request);
-
-			byte[] buffer = new byte[FRAGMENT_SIZE];
-			//receive reply from server
-			DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-			socket.receive(reply);
-			System.out.println("Client recieved here: " + new String(reply.getData()));
-			string = new String(reply.getData());
-			System.out.println("Sending: " + string);
-			socket.close();
-			break;
-		}
-
-		return string;
-
-	}
-	public DatagramSocket getSocket() {
-		return this.socket;
-	}
-	public int getServerSocketNum() {
-		return this.serverSocketNum;
-	}
-	public InetAddress getServerAddress() {
-		return this.serverAddress;
-	}
-	public void setSocket(DatagramSocket socket) {
-		this.socket = socket;
-	}
-	public void setServerSocketNum(int serverSocketNum) {
-		this.serverSocketNum = serverSocketNum;
-	}
-	public void setServerSocketAddress(String string) throws UnknownHostException {
-		serverAddress = InetAddress.getByName(string);
-	}
+public class CommunicationModuleServer {
+	
+    Dispatcher dispatcher = new Dispatcher();
+    final int FRAGMENT_SIZE = 65000;
+    int socketNum;
     
+    public static void main(String[] args) throws IOException {
+    	CommunicationModuleServer server = new CommunicationModuleServer();
+        server.recieveFromClient();
+    }
+
     
+    public void recieveFromClient() throws IOException {
+
+        DatagramSocket socket = new DatagramSocket(socketNum);
+            byte[] buffer = new byte[FRAGMENT_SIZE];
+
+            while (true) {
+            	
+                DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+                //blocks until message arrives
+                socket.receive(request);
+                String message = new String(request.getData()).trim();
+                System.out.println("Received: " + message);
+                String retString = dispatcher.dispatch(message);
+                byte[] msgBytes = (retString).getBytes();
+                
+                //get client address and port
+                InetAddress address = request.getAddress();
+                int port = request.getPort();
+                
+                //reply to client
+                DatagramPacket reply = new DatagramPacket(msgBytes, msgBytes.length, address, port);
+                socket.send(reply);
+                buffer = new byte[FRAGMENT_SIZE];
+
+            }
+            
+        
+
+    }
+    public int getSocketNum() {
+    	return this.socketNum;
+    }
+    public void setSocketNum(int socketNum) {
+    	this.socketNum = socketNum;
+    }
+
 }
