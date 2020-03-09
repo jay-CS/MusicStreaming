@@ -15,31 +15,21 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-/**
- *
- * @author samantharain
- */
-public class Proxy {
+
+public class Proxy implements ProxyInterface{
     
-    private CommunicationModuleClient communicationModule;   // This is only for test. it should use the Communication  Module
-
-    private static Proxy proxy = null;
-
+    private CommunicationModuleClient communicationModule;   
     
     public void init(CommunicationModuleClient communicationModule) {
         this.communicationModule = communicationModule;
-    }
-    
+    }  
     
     public JsonObject synchExecution(String remoteMethod, String[] param) throws IOException {
         JsonObject jsonRequest = packRequest(remoteMethod, param);
-
         JsonParser parser = new JsonParser();
-        //String strRet =  this.communicationModule.syncSend(jsonRequest.toString());
-        //return parser.parse(strRet).getAsJsonObject();
-        return null;
+        String strRet =  this.communicationModule.sendToServer(jsonRequest.toString());
+        return parser.parse(strRet).getAsJsonObject();
     }
-
 
     private JsonObject packRequest(String remoteMethod, String[] param) {
         
@@ -72,7 +62,7 @@ public class Proxy {
 
         return jsonRequest;
     }
-
+    
     
     public static Catalog getCatalogMethod(String remoteMethod){
         ArrayList<Catalog> catalogList = readCatalogMethods();
@@ -98,6 +88,6 @@ public class Proxy {
         }
         return null;
     }
-    
+ 
     
 }

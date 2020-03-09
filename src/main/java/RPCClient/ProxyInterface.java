@@ -14,11 +14,6 @@ import com.google.gson.JsonObject;
 public interface ProxyInterface {
 
     
-    public JsonObject synchExecution(String songChunk, Long fileName, Long fileName0, int fragment);
-
-    
-    public JsonObject synchExecution(String fileSize, String valueOf);
-    
-    
+    public JsonObject synchExecution(String remoteMethod, String[] param) throws Exception;
     
 }

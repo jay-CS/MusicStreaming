@@ -4,23 +4,31 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import java.net.InetAddress;
+import java.util.Queue;
 
 public class CommunicationModuleServer {
 	
     Dispatcher dispatcher = new Dispatcher();
     final int FRAGMENT_SIZE = 65000;
     int socketNum;
+    private Queue<DatagramPacket> incoming_queue;
     
-    public static void main(String[] args) throws IOException {
-    	CommunicationModuleServer server = new CommunicationModuleServer();
-        server.recieveFromClient();
+    
+//    public static void main(String[] args) throws IOException {
+//    	CommunicationModuleServer server = new CommunicationModuleServer();
+//        server.recieveFromClient();
+//    }
+    
+    public CommunicationModuleServer(Dispatcher d, int socketNum) {
+        this.dispatcher = d;
+        this.socketNum = socketNum;
     }
 
     
     public void recieveFromClient() throws IOException {
 
         DatagramSocket socket = new DatagramSocket(socketNum);
-            byte[] buffer = new byte[FRAGMENT_SIZE];
+        byte[] buffer = new byte[FRAGMENT_SIZE];
 
             while (true) {
             	
@@ -49,8 +57,22 @@ public class CommunicationModuleServer {
     public int getSocketNum() {
     	return this.socketNum;
     }
+    
     public void setSocketNum(int socketNum) {
     	this.socketNum = socketNum;
+    }
+    
+    public void listen() throws IOException{
+        DatagramSocket socket = new DatagramSocket(socketNum);
+        while(true){
+            byte [] buffer = new byte[FRAGMENT_SIZE];
+            DatagramPacket packet = new DatagramPacket( buffer, 0, buffer.length );
+            socket.receive(packet);
+
+            synchronized ( incoming_queue ){
+                incoming_queue.add(packet);
+            }
+        }
     }
 
 }

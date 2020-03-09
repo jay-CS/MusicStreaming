@@ -1,3 +1,5 @@
+package RPCClient;
+
 /**
 * The CECS327RemoteInputStream extends InputStream class. The class implements 
 * markers that are used in AudioInputStream
@@ -14,6 +16,8 @@ import java.io.InputStream;
 import java.util.Base64;
 import com.google.gson.JsonObject;
 import java.util.concurrent.Semaphore; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class CECS327RemoteInputStream extends InputStream {
@@ -61,7 +65,7 @@ public class CECS327RemoteInputStream extends InputStream {
      * frament in nextBuf
      * @param fileName The name of the file
     */
-    public CECS327RemoteInputStream(Long fileName, ProxyInterface proxy) throws IOException {
+    public CECS327RemoteInputStream(Long fileName, ProxyInterface proxy) throws IOException, Exception {
         sem = new Semaphore(1); 
         try
         {
@@ -73,7 +77,12 @@ public class CECS327RemoteInputStream extends InputStream {
         this.fileName = fileName;        
         this.buf  = new byte[FRAGMENT_SIZE];	
         this.nextBuf  = new byte[FRAGMENT_SIZE];	
-        JsonObject jsonRet = proxy.synchExecution("getFileSize", String.valueOf(this.fileName));
+        //Modified by me Here
+        String[] fs = new String[1];
+        fs[0] = String.valueOf(this.fileName);
+        //JsonObject jsonRet = proxy.synchExecution("getFileSize", String.valueOf(this.fileName));
+        JsonObject jsonRet = proxy.synchExecution("getFileSize", fs);
+        //Changes stop here
         this.total = Integer.parseInt(jsonRet.get("ret").getAsString());
         getBuff(fragment);
         fragment++;
@@ -88,8 +97,19 @@ public class CECS327RemoteInputStream extends InputStream {
         new Thread()
         {
             public void run() {
-             
-                JsonObject jsonRet = proxy.synchExecution("getSongChunk", fileName, fileName, fragment);
+                //Modified by me Here
+                String[] fs = new String[3];
+                fs[0] = Long.toString(fileName);
+                fs[1] = Long.toString(fileName);
+                fs[2] = Integer.toString(fragment);
+                //JsonObject jsonRet = proxy.synchExecution("getSongChunk", fileName, fileName, fragment);
+                JsonObject jsonRet = null;
+                try {
+                    jsonRet = proxy.synchExecution("getSongChunk", fs);
+                } catch (Exception ex) {
+                    Logger.getLogger(CECS327RemoteInputStream.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //Changes stop Here
                 String s = jsonRet.get("ret").getAsString();
                 nextBuf = Base64.getDecoder().decode(s);
                 sem.release(); 
