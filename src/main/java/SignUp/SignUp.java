@@ -197,7 +197,7 @@ public class SignUp extends javax.swing.JDialog {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        SignInfo user = new SignInfo(new javax.swing.JFrame(),true);
+        SignIN user = new SignIN(new javax.swing.JFrame(),true);
         this.dispose();
         user.setVisible(true);
         

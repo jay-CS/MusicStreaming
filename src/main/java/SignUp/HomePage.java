@@ -7,16 +7,22 @@ package SignUp;
 
 import Model.*;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import java.util.Scanner;
 
 /**
  *
@@ -431,20 +437,38 @@ public class HomePage extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jList1MouseClicked
 
+    //ISSA the exit button 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         Gson gson = new Gson();
-        String fileName = "/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/accounts.json";
+        File f = new File("/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/accounts.json");
+        System.out.println(f.length());
         for(Playlist p: playlists) {
             user.addPlaylist(p);
         }
         try{
-            FileWriter fr = new FileWriter(fileName); 
-            String json = gson.toJson(user);
-            System.out.println(json);
-            fr.write(json);
-            fr.close();
+            if(f.length() > 0) {
+  
+
+                FileReader fr = new FileReader(f);
+                List<User> users = gson.fromJson(fr,new TypeToken<List<User>>() {}.getType());
+                users.add(user);
+                String json = gson.toJson(users);
+                FileWriter file = new FileWriter(f);
+                file.write(json);
+                file.close();
+            }
+            else {
+                FileWriter file = new FileWriter(f); 
+                JsonWriter jw = new JsonWriter(file);
+                file.write("[");
+                gson.toJson(user,User.class,jw);
+                file.write("]");
+                file.close();
+                jw.close(); 
+            }
         }
+        
         catch(FileNotFoundException e){
             System.out.println("File not found.");
         } 

@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author samantharain
  */
-public class SignInfo extends javax.swing.JDialog {
+public class SignIN extends javax.swing.JDialog {
 
     /**
-     * Creates new form SignInfo
+     * Creates new form SignIN
      */
-    public SignInfo(java.awt.Frame parent, boolean modal) {
+    public SignIN(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -76,6 +76,7 @@ public class SignInfo extends javax.swing.JDialog {
             }
         });
 
+        jTextField4.setToolTipText("");
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
@@ -173,8 +174,8 @@ public class SignInfo extends javax.swing.JDialog {
         // TODO add your handling code here:
         String fname = this.jTextField1.getText();
         String lname = this.jTextField2.getText();
-        String username = this.jTextField3.getText();
-        String email = this.jTextField4.getText();
+        String username = this.jTextField4.getText();
+        String email = this.jTextField3.getText();
         String pass = this.jPasswordField1.getText();
         String pass_check = this.jPasswordField2.getText();
         
@@ -188,7 +189,7 @@ public class SignInfo extends javax.swing.JDialog {
            return;
         }
         
-        User user = new User(fname,lname,username,email,pass);
+        User user = new User(username);
         HomePage hp = new HomePage(new javax.swing.JFrame(),true,user);
         this.dispose();
         hp.setVisible(true);
@@ -211,20 +212,20 @@ public class SignInfo extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SignInfo dialog = new SignInfo(new javax.swing.JFrame(), true);
+                SignIN dialog = new SignIN(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

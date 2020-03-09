@@ -1,18 +1,1 @@
-{"firstName":"j",
-    "lastName":"b",
-     "email":"123",
-            "username":"jay",
-                "userID":0,"password":
-                    "456","playlists":[
-                            {"name":"alabama",
-                                "playlist":[
-                                        {"artist":{"terms_freq":0.999945289,"terms":"industrial metal","name":"Nine Inch Nails","familiarity":0.905776889,"longitude":-81.69074,"location":"Cleveland, OH","latitude":41.50471,"similar":"ARC4K2E1187B9B6FDA","hotttnesss":0.598458501},
-                                                        "release":{"id":15567,"name":"Things Falling Apart"},
-                                                         "song":{"key":0.0,"mode_confidence":0.395,"artist_mbtags_count":7.0,"key_confidence":0.05,"tatums_start":0.33137,"year":2000,"duration":426.89261,"hotttnesss":0.635536649,"beats_start":0.80838,"time_signature_confidence":0.378,"title":"Metal","bars_confidence":0.018,"id":"SOKBBXO12A6701DEA0","bars_start":1.76242,"artist_mbtags":"industrial rock","start_of_fade_out":399.9,"tempo":63.017,"end_of_fade_in":0.286,"beats_confidence":1.0,"tatums_confidence":1.0,"mode":0,"time_signature":4.0,"loudness":-12.951}},
-                                        {"artist":{"terms_freq":0.959766246,"terms":"new wave","name":"Planet P Project","familiarity":0.426667857,"longitude":-63.933357868519515,"location":"Not available","latitude":37.15735675013362,"similar":"ARWVP631187FB4D016","hotttnesss":0.332275747},
-                                                        "release":{"id":358182,"name":"Pink World"},
-                                                        "song":{"key":4.0,"mode_confidence":0.652,"artist_mbtags_count":0.0,"key_confidence":0.717,"tatums_start":1.22595,"year":1984,"duration":269.81832,"hotttnesss":0.265861049,"beats_start":1.22595,"time_signature_confidence":0.487,"title":"Pink World","bars_confidence":0.806,"id":"SOIAZJW12AB01853F1","bars_start":1.91886,"artist_mbtags":"","start_of_fade_out":258.99,"tempo":86.643,"end_of_fade_in":5.3,"beats_confidence":0.44,"tatums_confidence":0.121,"mode":1,"time_signature":4.0,"loudness":-13.496}}
-                                ]
-                            }
-                        ]
-                    }
+[{"username":"11","userID":1,"playlists":[{"name":"a","playlist":[]}]},{"username":"jon","userID":1,"playlists":[{"name":"f","playlist":[]}]}]

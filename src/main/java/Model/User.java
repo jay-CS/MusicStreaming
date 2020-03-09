@@ -5,11 +5,6 @@ package Model;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-/**
- *
- * @author samantharain
- */
 import java.util.*;
 import java.io.*;
 
@@ -24,6 +19,18 @@ public class User {
 	private int userID;
 	private String password;
 	private ArrayList<Playlist> playlists;
+        
+        public User() { };
+        
+        public User(String username) {
+            this.username = username; 
+            userID += 1;
+            this.playlists = new ArrayList();
+            String firstName = "";
+            String lastName = "";
+            String email = "";
+            String password = "";
+        }
 	
 	public User(String fname, String lname, String email, String username, String password) {
                 this.firstName = fname;
@@ -31,10 +38,21 @@ public class User {
                 this.email = email;
 		this.username = username;
 		this.password = password;
-		this.userID = numOfUsers++;
+		this.userID += 1;
 		this.playlists = new ArrayList();
 	}
 	
+        public static User searchUser(User[] users,String username) {
+            for(User u: users) {
+                if(u.getUsername().equals(username)) {
+                    System.out.println("User Exists");
+                    return u;
+                }
+            }
+            System.out.println("User does not exist!");
+            return null;
+        }
+        
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -138,4 +156,5 @@ public class User {
             System.out.println("ERROR: A PLAYLIST " + name + " DOES NOT EXIST!");
             
         }
+        
 }

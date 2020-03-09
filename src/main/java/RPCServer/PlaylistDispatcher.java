@@ -10,6 +10,7 @@ import Model.Playlist;
 import Model.User;
 import com.google.gson.Gson;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -18,10 +19,11 @@ import java.io.IOException;
  */
 
 public class PlaylistDispatcher {
-    private User profiles;
+    private User profile;
 
     public PlaylistDispatcher(){
-        profiles = new User();
+        profile = new User();
+        
     }
 //
 //    public String getSongs(String sessionID, String playlistName, String pageNum) throws FileNotFoundException {
@@ -34,23 +36,32 @@ public class PlaylistDispatcher {
 //        }
 //    }
 
-    public String createPlaylist( String playlistName ) throws IOException {
-        profiles.addPlaylist( playlistName);
-        //return new Gson().toJson();
-    }
-
-    public String deletePlaylist(String playlistName ) throws IOException {
-        profiles.removePlaylist(playlistName);
-        //return new Gson().toJson();
-    }
-
-    public String addSongToPlaylist(String playlistName, Music music ) throws IOException {
-        
-        profiles.addSong(music,playlistName);
-        //return new Gson().toJson();
-    }
-//    public String getPage( String sessionID, String playlistName, int index ) throws FileNotFoundException {
-//        Playlist playlist = new Playlist(playlistName, profiles.getPage(Integer.parseInt(sessionID), playlistName, index));
-//        return new Gson().toJson(playlist);
+//    public String createPlaylist( String playlistName ) throws IOException {
+//        profiles.addPlaylist( playlistName);
+//        //return new Gson().toJson();
 //    }
+//
+//    public String deletePlaylist(String playlistName ) throws IOException {
+//        profiles.removePlaylist(playlistName);
+//        //return new Gson().toJson();
+//    }
+//
+//    public String addSongToPlaylist(String playlistName, Music music ) throws IOException {
+//        
+//        profiles.addSong(music,playlistName);
+//        //return new Gson().toJson();
+//    }
+    
+    public void setUser(String username) {
+        Gson gson = new Gson();
+        String fileName = "/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/accounts.json";
+        try{
+            FileReader fr = new FileReader(fileName);  
+            User[] userlist = gson.fromJson(fr, User[].class);
+            profile = User.searchUser(userlist, username);
+        }
+        catch(FileNotFoundException e){
+            System.out.println("File not found.");
+        }
+    }
 }
