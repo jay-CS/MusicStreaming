@@ -76,6 +76,11 @@ public class User {
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
+        
+        
+	public void setPlaylists(ArrayList<Playlist> playlists) {
+            this.playlists = playlists;
+        }
 	
 	public void addPlaylist(Playlist playlist) {
 		this.playlists.add(playlist);
@@ -108,6 +113,10 @@ public class User {
 	public int getNumOfUsers() {
 		return numOfUsers;
 	}
+        
+        public List<Playlist> getPlaylists() {
+            return this.playlists;
+        }
 	
 	public boolean checkEmail(String email) {
 		return this.email.equals(email);
