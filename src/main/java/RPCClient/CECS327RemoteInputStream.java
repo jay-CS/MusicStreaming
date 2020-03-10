@@ -61,9 +61,10 @@ public class CECS327RemoteInputStream extends InputStream {
 
 
     /**
-     * Constructor of the class. Initialize the variables and reads the first 
-     * frament in nextBuf
+     * Constructor of the class.Initialize the variables and reads the first 
+ frament in nextBuf
      * @param fileName The name of the file
+     * @param proxy
     */
     public CECS327RemoteInputStream(Long fileName, ProxyInterface proxy) throws IOException, Exception {
         sem = new Semaphore(1); 
@@ -100,9 +101,8 @@ public class CECS327RemoteInputStream extends InputStream {
                 //Modified by me Here
                 String[] fs = new String[3];
                 fs[0] = Long.toString(fileName);
-                fs[1] = Long.toString(fileName);
-                fs[2] = Integer.toString(fragment);
-                //JsonObject jsonRet = proxy.synchExecution("getSongChunk", fileName, fileName, fragment);
+                fs[1] = Integer.toString(fragment);
+                //jsonObject jsonRet = proxy.synchExecution("getSongChunk", fileName, fileName, fragment);
                 JsonObject jsonRet = null;
                 try {
                     jsonRet = proxy.synchExecution("getSongChunk", fs);

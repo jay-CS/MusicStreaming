@@ -46,6 +46,7 @@ public class SongDispatcher
         }
         
         // Encode in base64 so it can be transmitted 
+         System.out.println(Base64.getEncoder().encodeToString(buf));
          return Base64.getEncoder().encodeToString(buf);
     }
     

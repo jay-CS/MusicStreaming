@@ -1,31 +1,8 @@
 [
     {
-    "remoteMethod" : "getSongs",
-    "objectName" : "PlaylistServices",
-    "params" : [
-      {
-        "name" : "username",
-        "type" : "String"
-      },
-      {
-        "name" : "playlistName",
-        "type" : "String"
-      }    
-    ],
-    "call_semantic" : "At-most-once",
-    "returnType" : "String"
-  },
-
-
-  {
     "remoteMethod" : "createPlaylist",
     "objectName" : "PlaylistServices",
     "params" : [
-      {
-        "name" : "username",
-        "type" : "String"
-
-      },
       {
         "name" : "playlistName",
         "type" : "String"
@@ -41,10 +18,6 @@
     "objectName" : "PlaylistServices",
     "params" : [
       {
-        "name" : "username",
-        "type" : "String"
-      },
-      {
         "name" : "playlistName",
         "type" : "String"
       }
@@ -59,16 +32,12 @@
     "objectName" : "PlaylistServices",
     "params" : [
       {
-        "name" : "username",
-        "type" : "String"
-      },
-      {
         "name" : "playlistName",
         "type" : "String"
       },
       {
         "name" : "songID",
-        "type" : "String"
+        "type" : "Music"
       }
     ],
     "call_semantic" : "At-most-one",
@@ -77,48 +46,22 @@
 
 
   {
-    "remoteMethod" : "removeSongFromPlaylist",
+    "remoteMethod" : "removeSongToPlaylist",
     "objectName" : "PlaylistServices",
     "params" : [
-      {
-        "name" : "username",
-        "type" : "String"
-      },
       {
         "name" : "playlistName",
         "type" : "String"
       },
       {
         "name" : "songID",
-        "type" : "String"
+        "type" : "Music"
       }
     ],
     "call_semantic" : "Maybe",
     "returnType" : "boolean"
   },
 
-
-
-  {
-    "remoteMethod" : "search",
-    "objectName" : "PlaylistServices",
-    "params" : [
-      {
-        "name" : "username",
-        "type" : "String"
-      },
-      {
-        "name" : "playlistName",
-        "type" : "String"
-      },
-      {
-        "name" : "query",
-        "type" : "String"
-      }
-    ],
-    "call_semantic" : "Maybe",
-    "returnType" : "String"
-  },
 
 
   {

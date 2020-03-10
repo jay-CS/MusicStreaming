@@ -14,30 +14,43 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Proxy implements ProxyInterface{
     
     private Dispatcher d;
     
-    private CommunicationModuleClient communicationModule; 
+    private CommunicationModuleClient communicationModule;
     
     public Proxy(Dispatcher d) {
         this.d = d;
+        try { 
+            communicationModule = new CommunicationModuleClient();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Proxy.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SocketException ex) {
+            Logger.getLogger(Proxy.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void init(CommunicationModuleClient communicationModule) {
-        this.communicationModule = communicationModule;
-    }  
+//    public void init(CommunicationModuleClient communicationModule) {
+//        this.communicationModule = communicationModule;
+//    }  
+    
     
     public JsonObject synchExecution(String remoteMethod, String[] param) throws IOException {
         JsonObject jsonRequest = packRequest(remoteMethod, param);
         JsonParser parser = new JsonParser();
         //String strRet =  this.communicationModule.sendToServer(jsonRequest.toString());
-        System.out.println(d.dispatch(jsonRequest.toString()));
-        return null;
-        //return parser.parse(strRet).getAsJsonObject();
+        String strRet = d.dispatch(jsonRequest.toString());
+        System.out.println("Remote method " + remoteMethod + " JSON REQUEST: " + jsonRequest.toString());
+        System.out.println(strRet);
+        return parser.parse(strRet).getAsJsonObject();
     }
 
     private JsonObject packRequest(String remoteMethod, String[] param) {
@@ -64,6 +77,10 @@ public class Proxy implements ProxyInterface{
             else if(p.getType().equals("Long")) {
                 jsonParam.addProperty(p.getName(), Long.parseLong(param[i]));
             }
+//            else if(p.getType().equals("Music")) {
+//                jsonParam.addProperty(p.getName(), );
+//            }
+            
         }
 
         jsonRequest.add("param", jsonParam);
@@ -86,7 +103,7 @@ public class Proxy implements ProxyInterface{
 
     public static ArrayList<Catalog> readCatalogMethods(){
         Gson gson = new Gson();
-        String fileName = "catalog.json";
+        String fileName = "/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/RPCClient/catalog.json";
         try{
             Type catalogType = new TypeToken<ArrayList<Catalog>>(){}.getType();
             ArrayList<Catalog> catalog = gson.fromJson(new FileReader(fileName), catalogType);

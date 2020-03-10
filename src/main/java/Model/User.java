@@ -158,9 +158,16 @@ public class User {
             System.out.println("ERROR: A PLAYLIST " + p_name + " DOES NOT EXIST!");
         }
         
+        public void removeSong(Music music, String playlistName){
+            for(Playlist p : playlists) {
+                if(playlistName.equals(p.getName())) {
+                    p.removeSong(music);
+                }
+            }
+        }
+        
         
         public void removePlaylist(String name) {
-            
             for(Playlist p : playlists) {
                 if(p.getName().equals(name)) {
                     playlists.remove(p);
@@ -168,7 +175,6 @@ public class User {
                 return;
             }
             System.out.println("ERROR: A PLAYLIST " + name + " DOES NOT EXIST!");
-            
         }
         
 }
