@@ -5,18 +5,24 @@
  */
 package SignUp;
 
+import Model.User;
+import RPCServer.FileHelper;
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author samantharain
  */
-public class SignUp extends javax.swing.JDialog {
+public class Login extends javax.swing.JDialog {
 
     /**
      * Creates new form SignUp
      */
-    public SignUp(java.awt.Frame parent, boolean modal) {
+    public Login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -173,12 +179,16 @@ public class SignUp extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"You must enter both a username and a password","Alert",JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(true) {
-            System.out.println("Username: " + name + ", Paswword: " + pass);
-            HomePage hp = new HomePage(new javax.swing.JFrame(),true,null);
-            this.dispose();
-            hp.setVisible(true);
-            return;
+        User u = verifyLogin(name);
+        if(u != null) {
+            try {
+                System.out.println("Users exists in database");
+                HomePage hp = new HomePage(new javax.swing.JFrame(),true,u,false);
+                this.dispose();
+                hp.setVisible(true);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         
@@ -197,12 +207,17 @@ public class SignUp extends javax.swing.JDialog {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        SignIN user = new SignIN(new javax.swing.JFrame(),true);
+        Register user = new Register(new javax.swing.JFrame(),true);
         this.dispose();
         user.setVisible(true);
         
     }//GEN-LAST:event_jButton1MouseClicked
-
+    
+    public static User verifyLogin(String username) {
+        FileHelper fh = new FileHelper();
+        User u = fh.setUser(username);
+        return u;
+    }
     /**
      * @param args the command line arguments
      */
@@ -220,20 +235,20 @@ public class SignUp extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SignUp dialog = new SignUp(new javax.swing.JFrame(), true);
+                Login dialog = new Login(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -77,13 +77,18 @@ public class User {
 		this.userID = userID;
 	}
         
-        
-	public void setPlaylists(ArrayList<Playlist> playlists) {
+        public void setPlaylists(ArrayList<Playlist> playlists) {
             this.playlists = playlists;
         }
 	
 	public void addPlaylist(Playlist playlist) {
-		this.playlists.add(playlist);
+                for(Playlist p: playlists) {
+                    if(p.getName().equals(playlist.getName())){
+                        return;
+                    }
+                }
+                this.playlists.add(playlist);
+		
 	}
 	
 	public String getFirstName() {
@@ -114,7 +119,7 @@ public class User {
 		return numOfUsers;
 	}
         
-        public List<Playlist> getPlaylists() {
+        public ArrayList<Playlist> getPlaylist() {
             return this.playlists;
         }
 	

@@ -5,6 +5,9 @@
  */
 package SignUp;
 import Model.User;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -12,12 +15,12 @@ import javax.swing.JOptionPane;
  *
  * @author samantharain
  */
-public class SignIN extends javax.swing.JDialog {
+public class Register extends javax.swing.JDialog {
 
     /**
-     * Creates new form SignIN
+     * Creates new form Register
      */
-    public SignIN(java.awt.Frame parent, boolean modal) {
+    public Register(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -190,7 +193,12 @@ public class SignIN extends javax.swing.JDialog {
         }
         
         User user = new User(username);
-        HomePage hp = new HomePage(new javax.swing.JFrame(),true,user);
+        HomePage hp = null;
+        try {
+            hp = new HomePage(new javax.swing.JFrame(),true,user,true);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
         hp.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
@@ -212,20 +220,20 @@ public class SignIN extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignIN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SignIN dialog = new SignIN(new javax.swing.JFrame(), true);
+                Register dialog = new Register(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -1,10 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 package RPCServer;
 
 import com.google.gson.Gson;
@@ -17,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDispatcher {
+    
     private User profile;
 
     FileHelper fh = new FileHelper();
@@ -30,7 +24,7 @@ public class AccountDispatcher {
         account = fh.setUser(username);
         if(account!=null) {
             account = new User(username);
-            List<Playlist> list = account.getPlaylists();
+            List<Playlist> list = account.getPlaylist();
             account.setPlaylists((ArrayList<Playlist>) list);
         }else{
             account = new User();

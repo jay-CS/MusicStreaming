@@ -6,6 +6,7 @@
 package SignUp;
 
 import Model.*;
+import RPCServer.FileHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
@@ -15,6 +16,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,21 +34,45 @@ import java.util.Scanner;
  */
 public class HomePage extends javax.swing.JDialog {
 
-    Playlist current_playlist;
+    User user;
     static int num = 0;
     static DefaultListModel listModel = new DefaultListModel() ;
     static DefaultListModel listModel2 = new DefaultListModel();
+    Playlist current_playlist;
     ArrayList<Playlist> playlists = new ArrayList<Playlist>();
-    User user;
+    User[] userlist;
+    int ACCOUNT_ID = 0;
+    boolean new_user;
+    
     /**
      * Creates new form HomePage
      */
-    public HomePage(java.awt.Frame parent, boolean modal, User u) {
+    public HomePage(java.awt.Frame parent, boolean modal, User user, boolean new_user) throws FileNotFoundException {
         super(parent, modal);
         initComponents();
+        Gson gson = new Gson();
+        this.new_user = new_user;
+        File f = new File("/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/accounts.json");
         this.jList1.setModel(listModel);
         this.jList2.setModel(listModel);
-        user = u;
+        this.user = user;
+        FileReader fr = new FileReader(f);
+        userlist = gson.fromJson(fr, User[].class);
+        if(!new_user) {
+            System.out.println("User is not null!");
+            playlists = user.getPlaylist();
+            playlists.forEach((p) -> {
+                listModel2.addElement(p.getName());
+            });
+            this.jList2.setModel(listModel2);
+            for(User u: userlist) {
+                if(u.getUsername().equals(user.getUsername())) {
+                    break;
+                }
+                ACCOUNT_ID++;
+             }
+        }
+        
     }
 
     /**
@@ -359,6 +387,7 @@ public class HomePage extends javax.swing.JDialog {
                 listModel.addElement(m1.getSongName());
              }
             jList1.setModel(listModel);
+            return;
         }
     }//GEN-LAST:event_jList2MouseClicked
 
@@ -391,6 +420,7 @@ public class HomePage extends javax.swing.JDialog {
                 }
             }
         }
+
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -430,6 +460,7 @@ public class HomePage extends javax.swing.JDialog {
             try {
                 //System.out.println(index);
                 Main.mp3play("imperial.mp3");
+                return;
             } catch (IOException ex) {
                 Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -442,19 +473,25 @@ public class HomePage extends javax.swing.JDialog {
         // TODO add your handling code here:
         Gson gson = new Gson();
         File f = new File("/Users/samantharain/NetBeansProjects/MusicStreaming/src/main/java/Model/accounts.json");
-        System.out.println(f.length());
-        for(Playlist p: playlists) {
+        playlists.forEach((p) -> {
             user.addPlaylist(p);
-        }
+        });
         try{
-            if(f.length() > 0) {
-  
-
-                FileReader fr = new FileReader(f);
-                List<User> users = gson.fromJson(fr,new TypeToken<List<User>>() {}.getType());
-                users.add(user);
-                String json = gson.toJson(users);
-                FileWriter file = new FileWriter(f);
+            if(!this.new_user && f.length() > 0) {
+                userlist[ACCOUNT_ID] = user;
+                String json = gson.toJson(userlist);
+                System.out.println("JSON! " + json);
+                FileWriter file = new FileWriter(f,false);
+                file.write(json);
+                file.close();
+            }
+            if(this.new_user && f.length() >0) {
+                List<User> nuserlist = new ArrayList();
+                Collections.addAll(nuserlist, userlist);
+                nuserlist.add(user);
+                String json = gson.toJson(nuserlist);
+                System.out.println("JSON! " + json);
+                FileWriter file = new FileWriter(f,false);
                 file.write(json);
                 file.close();
             }
@@ -475,6 +512,9 @@ public class HomePage extends javax.swing.JDialog {
         catch (IOException ex) {
             Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        catch(ConcurrentModificationException e) {
+//            System.out.println("ERROR");
+//        }
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -492,7 +532,12 @@ public class HomePage extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             
             public void run() {
-                HomePage dialog = new HomePage(new javax.swing.JFrame(),true,null);
+                HomePage dialog = null;
+                try {
+                    dialog = new HomePage(new javax.swing.JFrame(),true,null,true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.setVisible(true);
             }
         });
