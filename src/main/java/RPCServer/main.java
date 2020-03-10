@@ -31,17 +31,16 @@ public class main {
         SongDispatcher s = new SongDispatcher();
         AccountDispatcher a = new AccountDispatcher();
         PlaylistDispatcher p = new PlaylistDispatcher();
-        p.setUser("1");
-//        d.registerObject(s, "SongServices");
+        //p.setUser("1");
+        d.registerObject(s, "SongServices");
 //        d.registerObject(a, "AccountServices");
 //        d.registerObject(p,"PlaylistServices");
 //        
-//        CommunicationModuleServer comm = new CommunicationModuleServer(d,1111);
-//        
-//        comm.listen();
-//        
-//        ProxyInterface proxy = new Proxy();
-//        mp3play(490183L, proxy);
+        //CommunicationModuleServer comm = new CommunicationModuleServer(d,1111);
+        
+        CommunicationModuleClient comm = new CommunicationModuleClient();
+        ProxyInterface proxy = new Proxy(d);
+        //mp3play(490183L, proxy);
         
     }
 }

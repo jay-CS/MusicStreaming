@@ -5,6 +5,7 @@
  */
 package RPCClient;
 
+import RPCServer.Dispatcher;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,7 +19,13 @@ import java.util.ArrayList;
 
 public class Proxy implements ProxyInterface{
     
-    private CommunicationModuleClient communicationModule;   
+    private Dispatcher d;
+    
+    private CommunicationModuleClient communicationModule; 
+    
+    public Proxy(Dispatcher d) {
+        this.d = d;
+    }
     
     public void init(CommunicationModuleClient communicationModule) {
         this.communicationModule = communicationModule;
@@ -27,8 +34,10 @@ public class Proxy implements ProxyInterface{
     public JsonObject synchExecution(String remoteMethod, String[] param) throws IOException {
         JsonObject jsonRequest = packRequest(remoteMethod, param);
         JsonParser parser = new JsonParser();
-        String strRet =  this.communicationModule.sendToServer(jsonRequest.toString());
-        return parser.parse(strRet).getAsJsonObject();
+        //String strRet =  this.communicationModule.sendToServer(jsonRequest.toString());
+        System.out.println(d.dispatch(jsonRequest.toString()));
+        return null;
+        //return parser.parse(strRet).getAsJsonObject();
     }
 
     private JsonObject packRequest(String remoteMethod, String[] param) {

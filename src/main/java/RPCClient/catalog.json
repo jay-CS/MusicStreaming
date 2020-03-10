@@ -10,11 +10,7 @@
       {
         "name" : "playlistName",
         "type" : "String"
-      },
-      {
-        "name" : "pageNum",
-        "type" : "String"
-      }
+      }    
     ],
     "call_semantic" : "At-most-once",
     "returnType" : "String"
