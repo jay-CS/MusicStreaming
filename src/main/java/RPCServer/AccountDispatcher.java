@@ -13,21 +13,25 @@ import Model.User;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDispatcher {
     private User profile;
 
+    FileHelper fh = new FileHelper();
+    
     public AccountDispatcher() {
         
     }
 
     public String logIn( String username ) throws FileNotFoundException {
         User account;
-        if(/*user with username exists*/) ){
+        account = fh.setUser(username);
+        if(account!=null) {
             account = new User(username);
-            ArrayList<Playlist> list = /*account with username*/.getPlaylists;
-            account.setPlaylists(list);
+            List<Playlist> list = account.getPlaylists();
+            account.setPlaylists((ArrayList<Playlist>) list);
         }else{
             account = new User();
         }
@@ -36,11 +40,13 @@ public class AccountDispatcher {
     }
 
     public String registerAccount( String username ) throws IOException {
-        if(/*user exists*/){
+        User account;
+        account = fh.setUser(username);
+        if(account != null){
             Gson gson = new Gson();
             return gson.toJson( new User() );
         }else{
-            User account = new User(username);
+            account = new User(username);
             //add account to database
             Gson gson = new Gson();
             return gson.toJson( account );
