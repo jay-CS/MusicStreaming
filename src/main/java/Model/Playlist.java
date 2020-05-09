@@ -1,6 +1,7 @@
 package Model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author samantharain
  */
-public class Playlist {
+public class Playlist implements Serializable {
     
     public String name;
     public ArrayList<Music> playlist = new ArrayList<Music>();

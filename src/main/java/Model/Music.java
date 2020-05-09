@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.Serializable;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,7 +12,7 @@ package Model;
  *
  * @author samantharain
  */
-public class Music {
+public class Music implements Serializable{
     
     private Artist artist;
     private Release release;

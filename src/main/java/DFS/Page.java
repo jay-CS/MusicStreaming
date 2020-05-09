@@ -1,3 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DFS;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -5,7 +12,7 @@ import java.util.Date;
 
 public class Page implements Serializable
 {
-    ArrayList<Integer> guids;
+    ArrayList<Long> guids;
     int size;
     String creationTS;
     String readTS;
@@ -19,8 +26,8 @@ public class Page implements Serializable
         referenceCount = 0;
     }
     
-    public ArrayList<Integer> getGuids(){
-        return guids;
+    public ArrayList<Long> getGuids(){
+        return this.guids;
     }
     
     public long getSize(){
@@ -43,7 +50,7 @@ public class Page implements Serializable
         return referenceCount;
     }
     
-    public void setGuids(ArrayList<Integer> guids){
+    public void setGuids(ArrayList<Long> guids){
         this.guids = guids;
     }
     
@@ -66,5 +73,7 @@ public class Page implements Serializable
     public void setReferenceCount(int referenceCount){
             this.referenceCount = referenceCount;
     }
+
+   
 
 };

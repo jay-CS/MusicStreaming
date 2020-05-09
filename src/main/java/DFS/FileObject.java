@@ -1,3 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DFS;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -22,6 +29,10 @@ public class FileObject implements Serializable
         referenceCount = 0;
         numberOfPages = 0;
         pages = new ArrayList<Page>();
+    }
+    
+    public FileObject() {
+        
     }
     
     public String getName(){

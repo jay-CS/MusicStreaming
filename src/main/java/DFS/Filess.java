@@ -1,15 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DFS;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Files implements Serializable {
+public class Filess implements Serializable {
 
 	List<FileObject> listOfFiles;
 	
-	public Files() {
+	public Filess() {
 		listOfFiles = new ArrayList<FileObject>();
     }
 
+        
         
     public List<FileObject> getFile() {
         return this.listOfFiles;
@@ -24,8 +32,8 @@ public class Files implements Serializable {
     	listOfFiles.add(file);
     }
 
-    public ArrayList<Integer> getGUIDs(String fileName){
-            ArrayList<Integer> list = new ArrayList();
+    public ArrayList<Long> getGUIDs(String fileName){
+            ArrayList<Long> list = new ArrayList();
             for (FileObject file : listOfFiles){
                 if(file.name.equals(fileName)){
                     for(Page p : file.pages){

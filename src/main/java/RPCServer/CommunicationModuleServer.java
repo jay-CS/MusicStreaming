@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Queue;
 
+
+//TODO: 
 public class CommunicationModuleServer {
 	
     Dispatcher dispatcher = new Dispatcher();
@@ -34,6 +36,7 @@ public class CommunicationModuleServer {
             	
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
                 //blocks until message arrives
+                
                 socket.receive(request);
                 String message = new String(request.getData()).trim();
                 System.out.println("Received: " + message);

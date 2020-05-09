@@ -22,7 +22,7 @@ public class CommunicationModuleClient {
 	}
 
 	public String sendToServer(String msg) throws IOException {
-
+                   //CHECK SEMANTICS FOR RETRANSMITTING, HASHMAP FOR REPSONSE AND EXECUTION 
 		System.out.println("Received: " + msg);
 
 		String string = "";
